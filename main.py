@@ -24,15 +24,14 @@ data = pd.read_csv("traindata.csv")
 x, y = data.iloc[:, 1:], data.iloc[:, 0]
 #print(x.head(), y.head())
 
+# processing x using HOG
+print("HOG")
+x = calc_hog(x.values)
+
 # making training and testing datasets
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=30)
 
-# processing x_train and x_test using HOG
-print("HOG")
-x_train = calc_hog(x_train.values)
-x_test = calc_hog(x_test.values)
-
-# fitting the SVC model
+# fitting the SVC model using x_train and y_train
 print("Fitting model")
 svc = SVC()
 svc.fit(x_train, y_train)
@@ -41,6 +40,6 @@ svc.fit(x_train, y_train)
 print("Making predictions")
 y_pred = svc.predict(x_test)
 
-# finding the accuracy of the model
+# finding accuracy of the model
 accuracy = accuracy_score(y_pred, y_test)
 print(f"Accuracy: {accuracy}")
